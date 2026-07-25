@@ -9,7 +9,7 @@
         <header class="bg-green-700 p-3 rounded-t-xl">
             <!-- BARU: Container Flex untuk Judul dan Tombol -->
             <div class="flex items-center justify-between flex-wrap gap-4"> 
-    <h1 class="font-bold text-white flex items-center justify-center gap-2">
+    <h1 class="font-bold text-white flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base">
         <span class="whitespace-nowrap">Penerjemah <span class="kamuskambera">Indonesia</span></span>
         
         <svg class="w-6 h-6 text-green-400 flex-shrink-0 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -41,16 +41,15 @@
             <meta name="csrf-token" content="{{ csrf_token() }}">
         </header>
 
-        <main class="p-8">
-            <!-- Tombol Tambah Kata telah dihapus dari sini -->
+        <main class="p-4">
             
             <!-- --- TATA LETAK SEBELAH MENYEBELAH (SIDE-BY-SIDE) --- -->
             <div class="flex flex-col md:flex-row gap-6 relative">
                 
                 <!-- Kolom KIRI (Akan diswap) -->
                 <div id="left-column" class="flex-1">
-				<div class="flex items-center justify-between mb-2">
-                    <label for="input-text" id="input-label" class="block text-lg font-semibold text-gray-700 mb-2">
+				<div class="flex items-center justify-between mb-1">
+                    <label for="input-text" id="input-label" class="block text-sm font-semibold text-gray-700 mb-1">
                         Teks Sumber&nbsp;<span class="kamuskambera">( Indonesia )</span>
                     </label>
 					<!-- BARU: Tombol Suara Input -->
@@ -63,7 +62,7 @@
 					
 						<textarea 
 							id="input-foreign"
-							rows="8" autocomplete="Off"
+							rows="4" autocomplete="Off"
 							placeholder="Type in your language here..."
 							class="w-full p-4 border-2 border-blue-400 rounded-lg focus:border-blue-600 focus:ring-blue-600 transition duration-150 text-gray-800 text-base resize-none shadow-inner hidden"
 						></textarea>
@@ -73,7 +72,7 @@
 					
                     <textarea 
                         id="input-text"
-                        rows="8" autocomplete="Off"
+                        rows="4" autocomplete="Off"
                         placeholder="Masukkan kata atau kalimat Bahasa Indonesia di sini..."
                         class="notranslate w-full p-4 border-2 border-green-300 rounded-lg focus:border-green-600 focus:ring-green-600 transition duration-150 ease-in-out text-gray-800 text-base resize-none shadow-inner"
                      translate="no"></textarea>
@@ -82,7 +81,7 @@
 					<div id="ghost-inputText" class="sr-only"></div>
 					 <!------------------------------------------------------------------------------------------------>
 					 
-                    <p id="input-status" class="text-sm text-gray-500 mt-1">Maksimal 255 karakter disarankan. Hanya kata-kata yang ada di kamus Anda yang akan diterjemahkan.</p>
+                    <p id="input-status" class="text-sm text-gray-500 mt-1">Maksimal 255 karakter!</p>
                 </div>
 
                 <!-- Tombol Tukar Bahasa (Hanya terlihat di desktop) --
@@ -92,8 +91,8 @@
                 
                 <!-- Kolom KANAN (Akan diswap) -->
                 <div id="right-column" class="flex-1">
-				<div class="flex items-center justify-between mb-2">
-                    <label for="output-text" id="output-label" class="block text-lg font-semibold text-gray-700 mb-2">
+				<div class="flex items-center justify-between mb-1">
+                    <label for="output-text" id="output-label" class="block text-sm font-semibold text-gray-700 mb-1">
                         Hasil Terjemahan ( Sumba Kambera )
                     </label>
 
@@ -109,7 +108,7 @@
 				</div>
                     <textarea 
                         id="output-text"
-                        rows="8" autocomplete="Off"
+                        rows="4" autocomplete="Off"
                         readonly
                         placeholder="Hasil terjemahan akan muncul di sini. Kata yang tidak ditemukan akan ditampilkan lagi."
                         class="w-full p-4 border-2 border-gray-200 bg-gray-50 rounded-lg text-gray-800 text-base cursor-default resize-none shadow-inner"
