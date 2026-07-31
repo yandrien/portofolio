@@ -6,7 +6,7 @@
         <section class="bg-gradient-to-r from-green-100 to-green-500 mx-[1px] py-16 md:py-24 text-center text-white relative overflow-hidden rounded-bl-[100px] rounded-tr-[10px] hero-section-pulse">
             <div class="absolute inset-0 opacity-90">
                 <!-- Gambar hero dengan id agar bisa diakses oleh JavaScript -->
-                <img src="{{ asset('images/welcomeimage-forest.png') }}"  id="welcomeimage" alt="Foto" class="w-full h-full object-cover hero-image-animate">
+                <img src="{{ asset('images/welcomeimage-forest.webp') }}"  id="welcomeimage" alt="Foto Header" class="w-full h-full object-cover">
 			</div>
             <div class="relative container mx-auto px-4">
                 <!-- Slogan utama -->

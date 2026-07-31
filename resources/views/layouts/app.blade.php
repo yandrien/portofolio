@@ -158,7 +158,7 @@
 			
 			@guest
 				<!-- Tampilkan Logo hanya jika pengguna BELUM login -->
-				<img src="{{ asset('images/ylaw-logon.png') }}" alt="AT Logo" class="h-6 w-auto md:h-8 md:w-auto">
+				<img src="{{ asset('images/ylaw-logon.webp') }}" alt="AT Logo" class="h-6 w-auto md:h-8 md:w-auto">
 			@endguest
 
 			@auth
@@ -588,97 +588,85 @@
 	
 		
 		// Array berisi URL gambar yang akan dirotasi.
-		// Anda dapat mengganti placeholder ini dengan URL gambar Anda sendiri.
-		const images = [
-			"{{ asset('images/welcomeimage-forest.png') }}",
-			"{{ asset('images/rumah-pintar.jpg') }}",
-			"{{ asset('images/drone-farming.jpg') }}",
-			"{{ asset('images/ai-robot.jpeg') }}",
-		];
-				
-		// Preload semua gambar
-		images.forEach(image => {
-			const img = new Image();
-			img.src = image;
-		});
+    const images = [
+        "{{ asset('images/welcomeimage-forest.webp') }}",
+        "{{ asset('images/rumah-pintar.webp') }}",
+        "{{ asset('images/drone-farming.webp') }}",
+        "{{ asset('images/ai-robot.webp') }}",
+    ];
+    
+    const AUTOSLIDE_INTERVAL_MS = 10000; // 10 detik
+    const MANUAL_DELAY_MS = 20000;       // Jeda 20 detik setelah klik manual
+    const FADE_DURATION_MS = 500;         // Samakan dengan durasi CSS transition
+    
+    let currentIndex = 0;
+    let autoSlideInterval = null;
+    let manualDelayTimeout = null;
+    
+    const heroImage = document.getElementById('welcomeimage');
+    const prevButton = document.getElementById('prevImage');
+    const nextButton = document.getElementById('nextImage');
+    
+    // Fungsi terpusat untuk mengganti gambar dengan efek transisi yang mulus
+    function goToSlide(index) {
+        if (!heroImage) return;
+    
+        // 1. Mulai Fade Out
+        heroImage.classList.remove('fade-in');
+    
+        // 2. Tunggu animasi fade-out selesai, baru ganti src dan Fade In kembali
+        setTimeout(() => {
+            currentIndex = index;
+            heroImage.src = images[currentIndex];
+            heroImage.classList.add('fade-in');
+        }, FADE_DURATION_MS);
+    }
+    
+    function nextSlide() {
+        const newIndex = (currentIndex + 1) % images.length;
+        goToSlide(newIndex);
+    }
+    
+    function prevSlide() {
+        const newIndex = (currentIndex - 1 + images.length) % images.length;
+        goToSlide(newIndex);
+    }
+    
+    function startAutoSlide() {
+        stopAutoSlide(); // Hindari penumpukan interval ganda
+        autoSlideInterval = setInterval(nextSlide, AUTOSLIDE_INTERVAL_MS);
+    }
+    
+    function stopAutoSlide() {
+        if (autoSlideInterval) clearInterval(autoSlideInterval);
+        if (manualDelayTimeout) clearTimeout(manualDelayTimeout);
+    }
+    
+    function handleManualNavigation(actionFn) {
+        stopAutoSlide(); // Hentikan autoslide sementara
+        actionFn();      // Jalankan fungsi navigasi (nextSlide / prevSlide)
+    
+        // Resume autoslide setelah jeda manual
+        manualDelayTimeout = setTimeout(() => {
+            startAutoSlide();
+        }, MANUAL_DELAY_MS);
+    }
+    
+    // --- INISIALISASI ---
+    if (heroImage) {
 
-		let currentIndex = 0;
-		const heroImage = document.getElementById('welcomeimage');
-
-		// --- Kode Baru: Konstanta dan Variabel untuk Navigasi ---
-		const AUTOSLIDE_INTERVAL_MS = 10000; // Interval default: 10 detik
-		const MANUAL_DELAY_MS = 20000;      // Jeda setelah interaksi manual: 20 detik
-
-		const prevButton = document.getElementById('prevImage');
-		const nextButton = document.getElementById('nextImage');
-
-		let autoSlideInterval;
-		let manualDelayTimeout;
-		// --- Akhir Kode Baru ---
-
-		// Fungsi untuk mengganti gambar ke depan (next).
-function changeImage() {
-    // PROTEKSI: Jika elemen tidak ada di halaman ini, berhenti sekarang juga.
-    if (!heroImage) return; 
-
-    heroImage.classList.remove('fade-in');
-
-    setTimeout(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-        heroImage.src = images[currentIndex];
-        heroImage.classList.add('fade-in');
-    }, 10);
-}
-
-// Fungsi Navigasi Mundur
-function prevImage() {
-    // PROTEKSI: Jika elemen tidak ada, berhenti.
-    if (!heroImage) return;
-
-    heroImage.classList.remove('fade-in');
-    setTimeout(() => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        heroImage.src = images[currentIndex];
-        heroImage.classList.add('fade-in');
-    }, 10);
-}
-
-		// Fungsi untuk memulai kembali autoslide
-		function startAutoSlide() {
-			autoSlideInterval = setInterval(changeImage, AUTOSLIDE_INTERVAL_MS);
-		}
-
-		// Fungsi untuk menghentikan autoslide dan memulai jeda manual
-		function handleManualNavigation() {
-			clearInterval(autoSlideInterval);
-			clearTimeout(manualDelayTimeout);
-
-			manualDelayTimeout = setTimeout(() => {
-				startAutoSlide();
-			}, MANUAL_DELAY_MS);
-		}
-
-		// Mulai otomatisasi saat halaman dimuat
-		// Mulai otomatisasi hanya jika elemen heroImage ditemukan
-if (heroImage) {
-    startAutoSlide();
-}
-
-		// Tambahkan event listeners ke tombol navigasi
-		if (prevButton) {
-			prevButton.addEventListener('click', () => {
-				prevImage();
-				handleManualNavigation();
-			});
-		}
-
-		if (nextButton) {
-			nextButton.addEventListener('click', () => {
-				changeImage(); // Menggunakan fungsi yang sudah ada
-				handleManualNavigation();
-			});
-		}
-		// --- Akhir Kode Baru ---
+        // Jalankan autoslide
+        startAutoSlide();
+    
+        // Event listeners
+        if (prevButton) {
+            prevButton.addEventListener('click', () => handleManualNavigation(prevSlide));
+        }
+    
+        if (nextButton) {
+            nextButton.addEventListener('click', () => handleManualNavigation(nextSlide));
+        }
+    }
 		
 		
 		
