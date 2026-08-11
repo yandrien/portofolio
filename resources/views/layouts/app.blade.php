@@ -405,7 +405,7 @@
             <a href="https://www.facebook.com/yandrien wohangara" target="_blank" class="text-white hover:text-green-300 transition-colors duration-300">
                 <i class="fa-brands fa-square-facebook text-4xl"></i>
             </a>
-            <a href="https://www.linkedin.com/in/yandrien-woha-015147a5/" target="_blank" class="text-white hover:text-green-300 transition-colors duration-300">
+            <a href="https://www.linkedin.com/in/yandrien-wohangara-015147a5/" target="_blank" class="text-white hover:text-green-300 transition-colors duration-300">
                 <i class="fa-brands fa-linkedin-in text-4xl"></i>
             </a>
             <a href="https://www.instagram.com/yandrien" target="_blank" class="text-white hover:text-green-300 transition-colors duration-300">
