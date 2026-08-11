@@ -45,19 +45,19 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        //cek pengguna
-		if (auth()->id() !== (int)$profile->user_id && !auth()->user()->is_admin) {
-			return redirect()->route('profile');
-		}
-		
-        // Mendapatkan pengguna yang sedang login
+		// Mendapatkan pengguna yang sedang login
         $user = Auth::user();
         
         // Mengambil profil yang terhubung dengan pengguna
         // Jika profil tidak ada, buat instance profil kosong
         $profile = $user->profile ?? new Profile();
-
-        return view('profile.edit', [
+		
+        //cek pengguna
+		if (auth()->id() !== (int)$profile->user_id && !auth()->user()->is_admin) {
+			return redirect()->route('profile');
+		}
+		
+		return view('profile.edit', [
             'user' => $user,
             'profile' => $profile,
         ]);
@@ -71,13 +71,17 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+		// Mendapatkan pengguna yang sedang login
+        $user = Auth::user();
+        
+        // Mengambil profil yang terhubung dengan pengguna
+        // Jika profil tidak ada, buat instance profil kosong
+        $profile = $user->profile ?? new Profile();
+		
         //cek pengguna
 		if (auth()->id() !== (int)$profile->user_id && !auth()->user()->is_admin) {
 			return redirect()->route('profile');
 		}
-		
-        // Dapatkan pengguna yang sedang login.
-        $user = Auth::user();
 
         // Validasi semua data dari formulir.
         $validatedData = $request->validate([
